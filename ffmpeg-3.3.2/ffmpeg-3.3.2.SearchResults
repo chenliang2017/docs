@@ -1,0 +1,107 @@
+---- URLProtocol Matches (106 in 39 files) ----
+async.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_async_protocol = {
+async.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_async_test_protocol = {
+avio.c (ffmpeg-3.3.2\libavformat):static int url_alloc_for_protocol(URLContext **puc, const URLProtocol *up,
+avio.c (ffmpeg-3.3.2\libavformat):static const struct URLProtocol *url_find_protocol(const char *filename)
+avio.c (ffmpeg-3.3.2\libavformat):    const URLProtocol **protocols;
+avio.c (ffmpeg-3.3.2\libavformat):            const URLProtocol *up = protocols[i];
+avio.c (ffmpeg-3.3.2\libavformat):    const URLProtocol *p = NULL;
+avio.c (ffmpeg-3.3.2\libavformat):    const URLProtocol *p = url_find_protocol(url);
+bluray.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_bluray_protocol = {
+cache.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_cache_protocol = {
+concat.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_concat_protocol = {
+crypto.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_crypto_protocol = {
+data_uri.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_data_protocol = {
+file.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_file_protocol = {
+file.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_pipe_protocol = {
+ftp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_ftp_protocol = {
+gopher.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_gopher_protocol = {
+hlsproto.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_hls_protocol = {
+http.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_http_protocol = {
+http.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_https_protocol = {
+http.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_httpproxy_protocol = {
+icecast.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_icecast_protocol = {
+librtmp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_librtmp_protocol = {
+librtmp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_librtmpt_protocol = {
+librtmp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_librtmpe_protocol = {
+librtmp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_librtmpte_protocol = {
+librtmp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_librtmps_protocol = {
+libsmbclient.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_libsmbclient_protocol = {
+libssh.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_libssh_protocol = {
+md5proto.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_md5_protocol = {
+mmsh.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_mmsh_protocol = {
+mmst.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_mmst_protocol = {
+prompeg.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_prompeg_protocol = {
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_async_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_bluray_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_cache_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_concat_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_crypto_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_data_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_ffrtmpcrypt_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_ffrtmphttp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_file_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_ftp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_gopher_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_hls_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_http_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_httpproxy_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_https_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_icecast_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_mmsh_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_mmst_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_md5_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_pipe_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_prompeg_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_rtmp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_rtmpe_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_rtmps_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_rtmpt_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_rtmpte_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_rtmpts_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_rtp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_sctp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_srtp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_subfile_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_tee_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_tcp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_tls_gnutls_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_tls_schannel_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_tls_securetransport_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_tls_openssl_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_udp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_udplite_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_unix_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_librtmp_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_librtmpe_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_librtmps_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_librtmpt_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_librtmpte_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_libssh_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):extern const URLProtocol ff_libsmbclient_protocol;
+protocols.c (ffmpeg-3.3.2\libavformat):    const URLProtocol **p = *opaque;
+protocols.c (ffmpeg-3.3.2\libavformat):const URLProtocol **ffurl_get_protocols(const char *whitelist,
+protocols.c (ffmpeg-3.3.2\libavformat):    const URLProtocol **ret;
+protocols.c (ffmpeg-3.3.2\libavformat):        const URLProtocol *up = url_protocols[i];
+protocol_list.c (ffmpeg-3.3.2\libavformat):static const URLProtocol *url_protocols[] = {
+rtmpcrypt.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_ffrtmpcrypt_protocol = {
+rtmphttp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_ffrtmphttp_protocol = {
+rtmpproto.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_##flavor##_protocol = {     \
+rtpproto.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_rtp_protocol = {
+sctp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_sctp_protocol = {
+srtpproto.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_srtp_protocol = {
+subfile.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_subfile_protocol = {
+tcp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_tcp_protocol = {
+teeproto.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_tee_protocol = {
+tls_gnutls.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_tls_gnutls_protocol = {
+tls_openssl.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_tls_openssl_protocol = {
+tls_schannel.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_tls_schannel_protocol = {
+tls_securetransport.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_tls_securetransport_protocol = {
+udp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_udp_protocol = {
+udp.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_udplite_protocol = {
+unix.c (ffmpeg-3.3.2\libavformat):const URLProtocol ff_unix_protocol = {
+url.h (ffmpeg-3.3.2\libavformat):    const struct URLProtocol *prot;
+url.h (ffmpeg-3.3.2\libavformat):typedef struct URLProtocol {
+url.h (ffmpeg-3.3.2\libavformat):} URLProtocol;
+url.h (ffmpeg-3.3.2\libavformat):const URLProtocol **ffurl_get_protocols(const char *whitelist,
+utils.c (ffmpeg-3.3.2\libavformat):    //We could use URLProtocol flags here but as many user applications do not use URLProtocols this would be unreliable
