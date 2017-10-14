@@ -1,0 +1,187 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+
+extern "C"
+{
+#include "libavutil/opt.h"
+#include "libavcodec/avcodec.h"
+#include "libavutil/imgutils.h"
+#include "libavformat/avformat.h"
+#include "libswscale/swscale.h"
+#include "libavutil/display.h"
+#include "libavutil/eval.h"
+#include "libavutil/base64.h"
+#include "libavutil/error.h"
+#include "libavutil/version.h"
+#include "libswresample/swresample.h"
+#include <libavdevice/avdevice.h>
+#include <libavfilter/avfilter.h>
+}
+
+//hardware encoder
+#define HARDWARE_ENCODER_CUVID 1
+
+int main(int argc, char** argv)
+{
+#if 1
+	//ffmepg
+	int y_size, i, videoindex;
+	AVFormatContext *pFormatCtx = NULL;
+	AVCodecContext *pCodecCtx = NULL;
+	AVCodec *pCodec = NULL;
+	AVFrame *pFrame = NULL;
+	AVFrame *pFrameYUV = NULL;
+	AVPacket *packet = NULL;
+	struct SwsContext *img_convert_ctx = NULL;
+
+	avcodec_register_all();
+	avformat_network_init();
+
+	Sleep(100);
+
+	AVOutputFormat *output_format = av_guess_format("mp4", "1.mp4", NULL);
+	int x= 1;
+#else
+	AVCodec *pCodec;
+	AVCodecContext *pCodecCtx = NULL;
+	AVFormatContext *pFormatCtx = NULL;
+	int i, ret, got_output;
+	FILE *fp_in;
+	FILE *fp_out;
+	AVFrame *pFrame;
+	AVPacket pkt;
+	int y_size;
+	int framecnt = 0;
+
+	AVCodecID codec_id = AV_CODEC_ID_H264;
+
+	char filename_in[] = "ds_480x272.yuv";
+#if HARDWARE_ENCODER_CUVID
+	char filename_out[] = "ds-cuda.h264";
+#else
+	char filename_out[] = "ds.h264";
+#endif
+
+	int in_w = 480, in_h = 272;
+	int framenum = 100;
+
+	avcodec_register_all();
+	avformat_network_init();
+
+	AVOutputFormat *output_format = av_guess_format("mp4", "c:/1.mp4", NULL);
+
+#if HARDWARE_ENCODER_CUVID
+	pCodec = avcodec_find_encoder_by_name("h264_nvenc");
+#else
+	pCodec = avcodec_find_encoder(codec_id);
+#endif
+	if (!pCodec) {
+		printf("Codec not found\n");
+		goto ERROR;
+	}
+	pCodecCtx = avcodec_alloc_context3(pCodec);
+	if (!pCodecCtx) {
+		printf("Could not allocate video codec context\n");
+		goto ERROR;
+	}
+	pCodecCtx->bit_rate = 400000;
+	pCodecCtx->width = in_w;
+	pCodecCtx->height = in_h;
+	pCodecCtx->time_base.num = 1;
+	pCodecCtx->time_base.den = 25;
+	pCodecCtx->gop_size = 10;
+	pCodecCtx->max_b_frames = 0;
+	pCodecCtx->pix_fmt = AV_PIX_FMT_YUV420P;
+
+	if (codec_id == AV_CODEC_ID_H264)
+		av_opt_set(pCodecCtx->priv_data, "preset", "slow", 0);
+
+	if (avcodec_open2(pCodecCtx, pCodec, NULL) < 0) {
+		printf("Could not open codec\n");
+		goto ERROR;
+	}
+
+	pFrame = av_frame_alloc();
+	if (!pFrame) {
+		printf("Could not allocate video frame\n");
+		goto ERROR;
+	}
+	pFrame->format = pCodecCtx->pix_fmt;
+	pFrame->width = pCodecCtx->width;
+	pFrame->height = pCodecCtx->height;
+
+	ret = av_image_alloc(pFrame->data, pFrame->linesize, pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, 16);
+	if (ret < 0) {
+		printf("Could not allocate raw picture buffer\n");
+		goto ERROR;
+	}
+
+	//Input raw data
+	fp_in = fopen(filename_in, "rb+");
+	if (!fp_in) {
+		printf("Could not open %s\n", filename_in);
+		goto ERROR;
+	}
+
+	//Output bitstream
+	fp_out = fopen(filename_out, "wb+");
+	if (!fp_out) {
+		printf("Could not open %s\n", filename_out);
+		goto ERROR;
+	}
+
+	y_size = pCodecCtx->width * pCodecCtx->height;
+	for (i = 0; i < framenum; i++) {
+		av_init_packet(&pkt);
+		pkt.data = NULL;    // packet data will be allocated by the encoder
+		pkt.size = 0;
+		//Read raw YUV data
+		if (fread(pFrame->data[0], 1, y_size, fp_in) <= 0 ||		// Y
+			fread(pFrame->data[1], 1, y_size / 4, fp_in) <= 0 ||	// U
+			fread(pFrame->data[2], 1, y_size / 4, fp_in) <= 0){	// V
+			return -1;
+		}
+		else if (feof(fp_in)){
+			break;
+		}
+
+		pFrame->pts = i;
+		ret = avcodec_encode_video2(pCodecCtx, &pkt, pFrame, &got_output);
+		if (ret < 0) {
+			printf("Error encoding frame\n");
+			goto ERROR;
+		}
+		if (got_output) {
+			printf("Succeed to encode frame: %5d\tsize:%5d\n", framecnt, pkt.size);
+			framecnt++;
+			fwrite(pkt.data, 1, pkt.size, fp_out);
+			av_free_packet(&pkt);
+		}
+	}
+
+	//Flush Encoder
+	for (got_output = 1; got_output; i++) {
+		ret = avcodec_encode_video2(pCodecCtx, &pkt, NULL, &got_output);
+		if (ret < 0) {
+			printf("Error encoding frame\n");
+			goto ERROR;
+		}
+		if (got_output) {
+			printf("Flush Encoder: Succeed to encode 1 frame!\tsize:%5d\n", pkt.size);
+			fwrite(pkt.data, 1, pkt.size, fp_out);
+			av_free_packet(&pkt);
+		}
+	}
+
+	fclose(fp_out);
+	avcodec_close(pCodecCtx);
+	av_free(pCodecCtx);
+	av_freep(&pFrame->data[0]);
+	av_frame_free(&pFrame);
+#endif
+
+	system("pause");
+	return 0;
+}
+
